@@ -6,12 +6,5 @@ output "hostname" { value = module.redis_enterprise.hostname }
 
 output "port" { value = "10000" }
 
-output "primary_access_key" {
-  value     = azapi_resource_action.db_keys.output.primaryKey
-  sensitive = true
-}
-
-output "secondary_access_key" {
-  value     = azapi_resource_action.db_keys.output.secondaryKey
-  sensitive = true
-}
+# Access keys are not directly accessible via azapi outputs due to sensitive_output
+# limitations. Keys can be fetched via: az redis enterprise database list-keys

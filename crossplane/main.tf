@@ -1,7 +1,5 @@
 locals {
-  # Construct parent_id from env var + resource group name
-  subscription_id = get_env("ARM_SUBSCRIPTION_ID", "")
-  parent_id       = "/subscriptions/${local.subscription_id}/resourceGroups/${var.resource_group_name}"
+  parent_id = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group_name}"
 }
 
 module "redis_enterprise" {
@@ -15,9 +13,6 @@ module "redis_enterprise" {
   public_network_access = "Enabled" # default is "Disabled"
 }
 
-# Fetch access keys via listKeys action
-resource "azapi_resource_action" "db_keys" {
-  type        = "Microsoft.Cache/redisEnterprise/databases@2025-07-01"
-  resource_id = module.redis_enterprise.database_id
-  action      = "listKeys"
-}
+# Note: Access keys can be fetched via Azure CLI when needed:
+#   az redis enterprise database list-keys \
+#     --resource-group <rg> --cluster-name <name> --database-name default
