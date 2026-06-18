@@ -76,10 +76,11 @@ resource "azapi_resource" "database" {
   type      = "Microsoft.Cache/redisEnterprise/databases@2025-07-01"
   body = {
     properties = {
-      clientProtocol   = var.enable_non_ssl_port ? "Plaintext" : "Encrypted"
-      evictionPolicy   = var.eviction_policy
-      clusteringPolicy = var.clustering_policy
-      modules          = var.redis_modules
+      accessKeysAuthentication = "Enabled"
+      clientProtocol          = var.enable_non_ssl_port ? "Plaintext" : "Encrypted"
+      evictionPolicy          = var.eviction_policy
+      clusteringPolicy        = var.clustering_policy
+      modules                 = var.redis_modules
     }
   }
   create_headers            = var.enable_telemetry ? { "User-Agent" : local.avm_azapi_header } : null

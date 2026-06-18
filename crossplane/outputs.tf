@@ -4,7 +4,7 @@ output "name" { value = module.redis_enterprise.name }
 
 output "hostname" { value = module.redis_enterprise.hostname }
 
-output "port" { value = module.redis_enterprise.database.output.properties.port }
+output "port" { value = "10000" }
 
 output "primary_access_key" {
   value     = azapi_resource_action.db_keys.output.primaryKey
